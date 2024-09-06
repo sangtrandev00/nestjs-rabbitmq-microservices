@@ -1,5 +1,10 @@
 FROM node:alpine As development
 
+# Install Python (Meaning of this line ?)
+# Explain this line below
+# Install Python and build tools
+RUN apk add --no-cache python3 build-base
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
@@ -11,6 +16,8 @@ COPY . .
 RUN npm run build
 
 FROM node:alpine as production
+# Install Python and build tools
+RUN apk add --no-cache python3 build-base
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}

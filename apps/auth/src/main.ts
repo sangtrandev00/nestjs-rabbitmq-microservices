@@ -13,5 +13,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   await app.startAllMicroservices();
   await app.listen(configService.get('PORT'));
+
+  console.log("login at port", configService.get('PORT'));
 }
 bootstrap();

@@ -5,6 +5,7 @@ import { BILLING_SERVICE } from './constants/services';
 import { CreateOrderRequest } from './dto/create-order.request';
 import { OrdersRepository } from './orders.repository';
 
+// Mục tiêu là phải chạy được source này! ==> Hiểu được luồng -> từ sau đó sẽ hiểu các concepts
 @Injectable()
 export class OrdersService {
   constructor(

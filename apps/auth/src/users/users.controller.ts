@@ -10,4 +10,9 @@ export class UsersController {
   async createUser(@Body() request: CreateUserRequest) {
     return this.usersService.createUser(request);
   }
+
+  @Post('all')
+  async getAllUsers() {
+    return this.usersService.getAllUsers();
+  }
 }

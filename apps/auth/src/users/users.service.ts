@@ -46,4 +46,10 @@ export class UsersService {
   async getUser(getUserArgs: Partial<User>) {
     return this.usersRepository.findOne(getUserArgs);
   }
+
+  async getAllUsers() {
+    const users = await this.usersRepository.find({});
+    console.log('users', users);
+    return users;
+  }
 }
