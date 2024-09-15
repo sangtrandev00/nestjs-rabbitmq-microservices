@@ -9,7 +9,7 @@ import { User } from './users/schemas/user.schema';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
@@ -17,13 +17,17 @@ export class AuthController {
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
+    console.log('user', user);
+
     await this.authService.login(user, response);
     response.send(user);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @MessagePattern('validate_user')
+  @UseGuards(JwtAuthGuard) // Step 4: Thực thi chiến lược JWT Auth Guard (jwt.strategy.ts)
+  @MessagePattern('validate_user') // Step 3: Service auth sẽ nhận request và validate user
   async validateUser(@CurrentUser() user: User) {
+    console.log('user', user);
+
     return user;
   }
 }

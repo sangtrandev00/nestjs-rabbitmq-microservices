@@ -8,6 +8,7 @@ import { OrdersService } from './orders.service';
 import { OrdersRepository } from './orders.repository';
 import { Order, OrderSchema } from './schemas/order.schema';
 import { BILLING_SERVICE } from './constants/services';
+import { BillingModule } from 'apps/billing/src/billing.module';
 
 @Module({
   imports: [
@@ -25,8 +26,9 @@ import { BILLING_SERVICE } from './constants/services';
       name: BILLING_SERVICE,
     }),
     AuthModule,
+    BillingModule
   ],
   controllers: [OrdersController],
   providers: [OrdersService, OrdersRepository],
 })
-export class OrdersModule {}
+export class OrdersModule { }

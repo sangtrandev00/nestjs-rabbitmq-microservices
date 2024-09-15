@@ -13,7 +13,7 @@ export class AuthService {
   constructor(
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async login(user: User, response: Response) {
     const tokenPayload: TokenPayload = {
@@ -27,6 +27,9 @@ export class AuthService {
 
     const token = this.jwtService.sign(tokenPayload);
 
+    console.log('token', token);
+
+    // Tìm hiểu lại về cookie
     response.cookie('Authentication', token, {
       httpOnly: true,
       expires,

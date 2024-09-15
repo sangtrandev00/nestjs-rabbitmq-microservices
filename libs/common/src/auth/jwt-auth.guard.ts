@@ -11,13 +11,16 @@ import { AUTH_SERVICE } from './services';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(@Inject(AUTH_SERVICE) private authClient: ClientProxy) {}
+  constructor(@Inject(AUTH_SERVICE) private authClient: ClientProxy) { }
 
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const authentication = this.getAuthentication(context);
-    return this.authClient
+    console.log('authentication', authentication);
+
+    // Step 2: Gửi request đến service auth để validate user
+    const user = this.authClient
       .send('validate_user', {
         Authentication: authentication,
       })
@@ -29,6 +32,8 @@ export class JwtAuthGuard implements CanActivate {
           throw new UnauthorizedException();
         }),
       );
+    // Step 5 -> Step 6 ở đây (trả về thông tin của user ở đây!)
+    return user
   }
 
   private getAuthentication(context: ExecutionContext) {

@@ -14,19 +14,22 @@ export class OrdersService {
   ) {}
 
   async createOrder(request: CreateOrderRequest, authentication: string) {
-    const session = await this.ordersRepository.startTransaction();
+    // const session = await this.ordersRepository.startTransaction();
     try {
-      const order = await this.ordersRepository.create(request, { session });
-      await lastValueFrom(
+      // const order = await this.ordersRepository.create(request, { session });
+      const order = await this.ordersRepository.create(request);
+      const res = await lastValueFrom(
         this.billingClient.emit('order_created', {
           request,
           Authentication: authentication,
         }),
       );
-      await session.commitTransaction();
+      console.log('res emit', res);
+
+      // await session.commitTransaction();
       return order;
     } catch (err) {
-      await session.abortTransaction();
+      // await session.abortTransaction();
       throw err;
     }
   }
